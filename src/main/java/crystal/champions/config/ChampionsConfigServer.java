@@ -1,7 +1,7 @@
 package crystal.champions.config;
 
 import crystal.champions.Champions;
-import crystal.champions.util.ChampionRank;
+import crystal.champions.rank.ChampionRank;
 import crystal.champions.util.SimpleConfig;
 import net.fabricmc.loader.api.FabricLoader;
 
@@ -120,7 +120,7 @@ public class ChampionsConfigServer {
 
     public static void reload() {
         instance = new ChampionsConfigServer();
-        ChampionRank.get();
+        ChampionRank.ChampionsRanks();
         Champions.LOGGER.info("champions_common reloaded!");
     }
 

@@ -1,7 +1,7 @@
-package crystal.champions.mixin;
+package crystal.champions.mixin.spawn;
 
 import crystal.champions.IChampions;
-import crystal.champions.util.ChampionRank;
+import crystal.champions.rank.ChampionRank;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.MobEntity;
@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import static crystal.champions.util.PrepareChampions.*;
+import static crystal.champions.rank.ChampionFactory.*;
 
 @Mixin(MobEntity.class)
 public class ApplyChampionOnSpawn {
@@ -21,15 +21,15 @@ public class ApplyChampionOnSpawn {
         final MobEntity mobEntity = (MobEntity) (Object) this;
         if (spawnReason != SpawnReason.TRIAL_SPAWNER
                 && spawnReason != SpawnReason.SPAWNER
-                && canBeChampion(mobEntity)
+                && isEligible(mobEntity)
                 && mobEntity instanceof IChampions i)
         {
-            final ChampionRank rank = ChampionRank.getRandomRank(mobEntity.getRandom());
+            final ChampionRank rank = ChampionRank.roll(mobEntity.getRandom());
             if (rank.tier() > 0)
             {
                 i.champions$setChampionTier(rank.tier());
-                prepareAttributes(mobEntity, rank);
-                i.champions$setAffixesString(prepareAffixes(rank));
+                applyRank(mobEntity, rank);
+                i.champions$setAffixesString(pickAffixes(rank));
             }
         }
     }

@@ -11,14 +11,11 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(LivingEntity.class)
 public class AdaptiveMixin {
-    /**
-     * При ударе считаем урон для чемпиона
-     *                 return affix.calculateDamage((LivingEntity)(Object)this, source, amount);
-     */
+    // Check for same source, if yes, reduce damage, else set to default (1.0)
     @ModifyVariable(method = "damage", at = @At("HEAD"), argsOnly = true)
     private float applyAdaptive(float amount, DamageSource source) {
         if (this instanceof IChampions champion && champion.champions$getAffixesString().contains("adaptive")) {
-            AdaptiveAffix affix = (AdaptiveAffix) AffixRegistry.ALL_AFFIXES.get("adaptive");
+            final AdaptiveAffix affix = (AdaptiveAffix) AffixRegistry.ALL_AFFIXES.get("adaptive");
             if (affix != null) {
                 return affix.calculateDamage((LivingEntity) (Object) this, source, amount);
             }

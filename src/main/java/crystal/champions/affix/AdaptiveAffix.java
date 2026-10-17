@@ -3,15 +3,9 @@ package crystal.champions.affix;
 import crystal.champions.IChampions;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.RegistryKey;
 
 import java.util.Optional;
 
-/**
- * Адаптивный аффикс
- * Сравниваем damage source и если совпадает, то уменьшаем урон, если нет то сбрасываем
- */
 public class AdaptiveAffix extends Affix {
 
     public AdaptiveAffix() {
@@ -19,21 +13,18 @@ public class AdaptiveAffix extends Affix {
     }
 
     public float calculateDamage(LivingEntity entity, DamageSource source, float amount) {
-
-        if (!(source.getAttacker() instanceof LivingEntity)) return amount;
-        IChampions champion = (IChampions) entity;
-        Optional<RegistryKey<DamageType>> key = source.getTypeRegistryEntry().getKey();
-        if (key.isEmpty()) return amount;
-        if (source.getSource() == champion&& source.getAttacker() == champion) return amount;
-        final String currentType = source.getTypeRegistryEntry().getKey().get().getValue().toString();
-
+        final IChampions champion = (IChampions) entity;
         final String lastType = champion.champions$getAdaptationType();
-        final int count = champion.champions$getAdaptation();
+        final String currentType = (Optional.of(source.getTypeRegistryEntry()).get().getType().toString());
+
+        if (source.getAttacker() instanceof LivingEntity || source.getSource() == champion && source.getAttacker() == champion) return amount;
+
         if (lastType.equals(currentType)) {
-            champion.champions$setAdaptation(count + 1);
-            final float reduction = amount * 0.15f * count;
-            final float newAmount = amount - reduction;
+            final int count = champion.champions$getAdaptation();
+            final float newAmount = amount - amount * count * 0.15f;
             final float minDamage = amount * 0.2f;
+
+            champion.champions$setAdaptation(count + 1);
             return Math.max(newAmount, minDamage);
         } else {
             champion.champions$setAdaptationType(currentType);

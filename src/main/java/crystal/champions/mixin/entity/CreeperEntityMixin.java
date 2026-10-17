@@ -1,4 +1,4 @@
-package crystal.champions.mixin;
+package crystal.champions.mixin.entity;
 
 import crystal.champions.IChampions;
 import net.minecraft.entity.EntityType;
@@ -11,10 +11,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+@SuppressWarnings("java:S110")
 @Mixin(CreeperEntity.class)
 public class CreeperEntityMixin extends HostileEntity {
     @Shadow private int explosionRadius;
-
     @Shadow private int fuseTime = 30;
 
     protected CreeperEntityMixin(EntityType<? extends HostileEntity> entityType, World world) {
@@ -24,16 +24,17 @@ public class CreeperEntityMixin extends HostileEntity {
     @Inject(method = "explode", at = @At("HEAD"))
     private void increaseExplosionRadius(CallbackInfo ci) {
         if (this instanceof IChampions champion) {
-            int tier = champion.champions$getChampionTier();
+            final int tier = champion.champions$getChampionTier();
             if (tier > 0) {
                 this.explosionRadius = (int) (this.explosionRadius * (float) tier);
             }
         }
     }
+    
     @Inject(method = "tick", at = @At("HEAD"))
     private void championsTick(CallbackInfo ci) {
         if (this instanceof IChampions champions && champions.champions$getChampionTier() > 3) {
-                fuseTime = fuseTime + (champions.champions$getChampionTier() - 3) * 10;
+            fuseTime = fuseTime + (champions.champions$getChampionTier() - 3) * 10;
         }
     }
 }

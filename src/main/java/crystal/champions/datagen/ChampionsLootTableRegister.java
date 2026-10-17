@@ -1,4 +1,4 @@
-package crystal.champions.data;
+package crystal.champions.datagen;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
@@ -21,25 +21,23 @@ public class ChampionsLootTableRegister implements ModInitializer {
     public void onInitialize() {
         LootTableEvents.MODIFY.register((key, tableBuilder, source, wrapperLookup) -> {
             if (source.isBuiltin() && key.getValue().getPath().startsWith("entities/")) {
-                LootPool.Builder poolBuilder = LootPool.builder()
-                        .rolls(ConstantLootNumberProvider.create(1.0f));
+                final LootPool.Builder poolBuilder = LootPool.builder().rolls(ConstantLootNumberProvider.create(1.0f));
                 for (int tier = 1; tier < 6; tier++) {
                     RegistryKey<LootTable> tierKey = RegistryKey.of(RegistryKeys.LOOT_TABLE,
                             Identifier.of("champions", "champions/tier_" + tier));
                     poolBuilder.with(LootTableEntry.builder(tierKey)
                             .conditionally(EntityPropertiesLootCondition.builder(
                                     LootContext.EntityTarget.THIS,
-                                    EntityPredicate.Builder.create()
-                                            .nbt(new NbtPredicate(createTierNbt(tier)))
-                            ))
+                                    EntityPredicate.Builder.create().nbt(new NbtPredicate(createTierNbt(tier))))
+                            )
                     );
                 }
                 tableBuilder.pool(poolBuilder);
             }
         });
     }
-    private static NbtCompound createTierNbt(int tier) {
-        NbtCompound nbt = new NbtCompound();
+    private NbtCompound createTierNbt(int tier) {
+        final NbtCompound nbt = new NbtCompound();
         nbt.putInt("tier", tier);
         return nbt;
     }

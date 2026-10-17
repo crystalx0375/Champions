@@ -7,17 +7,12 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.projectile.ShulkerBulletEntity;
 import net.minecraft.util.math.Direction;
 
-/**
- * Создаем bullet, и суем в него нбт
- * ShulkerBulletEntity
- */
 public class ArcticAffix extends Affix {
+    private static final ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
 
     public ArcticAffix() {
         super("arctic");
     }
-
-    ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
 
     @Override
     public void onAttack(LivingEntity entity, MobEntity mob) {

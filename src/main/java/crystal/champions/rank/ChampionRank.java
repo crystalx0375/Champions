@@ -1,4 +1,4 @@
-package crystal.champions.util;
+package crystal.champions.rank;
 
 import crystal.champions.config.ChampionsConfigServer;
 import net.minecraft.util.math.random.Random;
@@ -7,12 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record ChampionRank(int tier, int affixes, int weight, float growth_h, float growth_s) {
-
-    public static List<ChampionRank> RANKS = new ArrayList<>();
+    private static List<ChampionRank> RANKS = new ArrayList<>();
     private static int TOTAL_WEIGHT = 0;
 
-    public static void get() {
-        var cfg = ChampionsConfigServer.get();
+    public static void ChampionsRanks() {
+        final var cfg = ChampionsConfigServer.get();
         TOTAL_WEIGHT = 0;
         RANKS = List.of(
                 new ChampionRank(0, 0, cfg.w0, 1.0f, 1.0f),
@@ -28,7 +27,7 @@ public record ChampionRank(int tier, int affixes, int weight, float growth_h, fl
         }
     }
 
-    public static ChampionRank getRandomRank(Random random) {
+    public static ChampionRank roll(Random random) {
         if (TOTAL_WEIGHT <= 0) return RANKS.getFirst();
 
         int roll = random.nextInt(TOTAL_WEIGHT);

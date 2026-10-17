@@ -4,14 +4,8 @@ import crystal.champions.config.ChampionsConfigClient;
 import net.minecraft.client.gui.DrawContext;
 
 public class ChampionsColor {
+    private ChampionsColor() {}
 
-    private ChampionsColor() {
-        /* This utility class should not be instantiated */
-    }
-    /**
-     * Это использую для того, чтобы потом через кфг с hex цвета менять в числовое
-     * Чуть вайб кодинга было тут
-     */
     public static void applyColor(DrawContext context, int hex) {
         final float r = (hex >> 16 & 255) / 255.0F;
         final float g = (hex >> 8 & 255) / 255.0F;

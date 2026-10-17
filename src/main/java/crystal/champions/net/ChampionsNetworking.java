@@ -1,4 +1,4 @@
-package crystal.champions.util.net;
+package crystal.champions.net;
 
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.mob.MobEntity;
@@ -15,31 +15,35 @@ public class ChampionsNetworking {
         /* This utility class should not be instantiated */
     }
 
-    public static void sendUpdateS(ServerPlayerEntity player, MobEntity entity, int tier, String affixes) {
+    public static void sendUpdateS(ServerPlayerEntity player, MobEntity entity, int tier, String affixes, float health, float maxHealth) {
         Payload.ChampionUpdate payload = new Payload.ChampionUpdate(
                 entity.getUuid(),
                 entity.getDisplayName(),
                 tier,
                 affixes,
-                entity.getHealth(),
-                entity.getMaxHealth()
+                health,
+                maxHealth
         );
         ServerPlayNetworking.send(player, payload);
     }
 
-    public static void sendUpdateC(ServerPlayerEntity player, MobEntity entity, int tier, String affixes) {
+    public static void sendUpdateC(ServerPlayerEntity player, MobEntity entity, int tier, String affixes, float health, float maxHealth) {
         Payload.ChampionUpdateCl payload = new Payload.ChampionUpdateCl(
                 entity.getUuid(),
                 entity.getDisplayName(),
                 tier,
                 affixes,
-                entity.getHealth(),
-                entity.getMaxHealth()
+                health,
+                maxHealth
         );
         ServerPlayNetworking.send(player, payload);
     }
 
-    public static void sendRemove(ServerPlayerEntity player, MobEntity mob) {
-        ServerPlayNetworking.send(player, new Payload.ChampionRemove(mob.getUuid()));
+    public static void sendRemoveS(ServerPlayerEntity player, MobEntity mob) {
+        ServerPlayNetworking.send(player, new Payload.ChampionSRemove(mob.getUuid()));
+    }
+
+    public static void sendRemoveC(ServerPlayerEntity player, MobEntity mob) {
+        ServerPlayNetworking.send(player, new Payload.ChampionCRemove(mob.getUuid()));
     }
 }

@@ -6,17 +6,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 
-/**
- * ShieldingAffix
- * В миксине отменяем урон раз в некоторое кол-во времени
- */
 public class ShieldingAffix extends Affix {
+    private static final ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
 
     public ShieldingAffix() {
         super("shielding");
     }
-
-    ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
 
     @Override
     public void onTick(LivingEntity entity) {
@@ -25,7 +20,7 @@ public class ShieldingAffix extends Affix {
         final long time = entity.getWorld().getTime();
         final boolean shieldWork = (time % config.shieldAllTime) < config.shieldWork;
 
-        IChampions champion = (IChampions) entity;
+        final IChampions champion = (IChampions) entity;
 
         if (champion.champions$isShielding() != shieldWork) {
             champion.champions$setShielding(shieldWork);

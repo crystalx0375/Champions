@@ -19,10 +19,7 @@ public class ShulkerBulletRendererMixin {
 
     /**
      * Change bullet color
-     * @param model which model
-     * @param texture idk pray
-     * @param entity for check IBullet
-     * @return texture
+     * @return custom texture
      */
     @Redirect(
             method = "render*",
@@ -52,7 +49,7 @@ public class ShulkerBulletRendererMixin {
             )
     )
     private RenderLayer redirectLayerField(ShulkerBulletEntity entity) {
-        IBullet bullet = (IBullet) entity;
+        final IBullet bullet = (IBullet) entity;
 
         if (bullet.champions$isArctic()) {
             return RenderLayer.getEntityTranslucent(ARCTIC_TEXTURE);

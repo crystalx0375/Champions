@@ -8,13 +8,12 @@ import net.minecraft.entity.effect.StatusEffects;
 import java.util.Random;
 
 public class BlindedAffix extends Affix {
+    private static final ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
+    private static final Random rnd = new Random();
 
     public BlindedAffix() {
         super("blinded");
     }
-
-    ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
-    Random rnd = new Random();
 
     @Override
     public void onHurt(LivingEntity champion, LivingEntity target) {

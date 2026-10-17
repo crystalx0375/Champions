@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class StunStatusEffect extends StatusEffect {
+public class Stun extends StatusEffect {
     private static final Map<UUID, Float> frozenYaw = new ConcurrentHashMap<>();
     private static final Map<UUID, Float> frozenPitch = new ConcurrentHashMap<>();
 
-    public StunStatusEffect() {
+    public Stun() {
         super(StatusEffectCategory.HARMFUL, 0x999999);
     }
 
@@ -22,15 +22,15 @@ public class StunStatusEffect extends StatusEffect {
         entity.setVelocity(0, 0, 0);
 
         if (entity instanceof PlayerEntity player) {
-            UUID id = player.getUuid();
+            final UUID id = player.getUuid();
 
             frozenYaw.putIfAbsent(id, player.getYaw());
             frozenPitch.putIfAbsent(id, player.getPitch());
             final float baseYaw = frozenYaw.get(id);
             final float basePitch = frozenPitch.get(id);
 
-            player.setYaw(baseYaw + (float)((Math.random() - 0.5) * 0.1));
-            player.setPitch(basePitch + (float)((Math.random() - 0.5) * 0.1));
+            player.setYaw(baseYaw + (float) ((Math.random() - 0.5) * 0.1));
+            player.setPitch(basePitch + (float) ((Math.random() - 0.5) * 0.1));
 
             player.setSprinting(false);
             player.setJumping(false);

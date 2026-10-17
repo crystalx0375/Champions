@@ -5,18 +5,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 
-/**
- * KnockingAffix
- * Откидываем игрока
- */
 public class KnockingAffix extends Affix {
+    private static final ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
 
     public KnockingAffix() {
         super("knocking");
     }
-
-    ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
-
+    
     @Override
     public void onHurt(LivingEntity champion, LivingEntity target) {
         final float yaw = champion.getYaw();

@@ -3,9 +3,7 @@ package crystal.champions;
 import crystal.champions.config.ChampionsConfigClient;
 
 public class ChampionsColorServer {
-    private ChampionsColorServer() {
-        /* This utility class should not be instantiated */
-    }
+    private ChampionsColorServer() {}
 
     private static int parseHex(String hex) {
         try {
@@ -16,15 +14,15 @@ public class ChampionsColorServer {
     }
 
     public static int getColor(int tier) {
-        ChampionsConfigClient cfg = ChampionsConfigClient.get();
+        final ChampionsConfigClient config = ChampionsConfigClient.get();
 
         try {
             return switch (tier) {
-                case 1 -> parseHex(cfg.hexTier1);
-                case 2 -> parseHex(cfg.hexTier2);
-                case 3 -> parseHex(cfg.hexTier3);
-                case 4 -> parseHex(cfg.hexTier4);
-                default -> parseHex(cfg.hexTier5);
+                case 1 -> parseHex(config.hexTier1);
+                case 2 -> parseHex(config.hexTier2);
+                case 3 -> parseHex(config.hexTier3);
+                case 4 -> parseHex(config.hexTier4);
+                default -> parseHex(config.hexTier5);
             };
         } catch (Exception e) {
             return 0xffffff;

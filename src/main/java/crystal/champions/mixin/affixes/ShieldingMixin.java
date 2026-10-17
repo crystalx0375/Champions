@@ -10,10 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public class ShieldingMixin {
-    /**
-     * Отменяем урон если есть shield
-     *             cir.setReturnValue(false);
-     */
+    // Cancel damage when champion have shield
     @Inject(method = "damage", at = @At("HEAD"), cancellable = true)
     private void applyShielding(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (this instanceof IChampions champion && champion.champions$isShielding()) {

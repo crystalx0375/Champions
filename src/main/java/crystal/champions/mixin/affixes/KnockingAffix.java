@@ -13,17 +13,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MobEntity.class)
 public class KnockingAffix {
-    /**
-     * Здесь мы сравниваем и применяем Knockback если подходят условия
-     */
+    // Call the method when the mob hurt the target
     @Inject(method = "tryAttack", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"))
     private void onChampionsAttack(Entity target, CallbackInfoReturnable<Boolean> cir) {
-        if (target instanceof LivingEntity lTarget && this instanceof IChampions champion
-            && champion.champions$getAffixesString().contains("knocking")) {
-
-        Affix affix = AffixRegistry.ALL_AFFIXES.get("knocking");
-
-        if (affix != null && lTarget.getRecentDamageSource() != null) {
+        if (target instanceof LivingEntity lTarget && this instanceof IChampions champion && champion.champions$getAffixesString().contains("knocking")) {
+            final Affix affix = AffixRegistry.ALL_AFFIXES.get("knocking");
+            if (affix != null && lTarget.getRecentDamageSource() != null) {
                 affix.onHurt((LivingEntity) (Object) this, lTarget);
             }
         }

@@ -23,25 +23,24 @@ public class ChampionsModMenu implements ModMenuApi {
     }
 
     private Screen createConfigScreen(Screen parent) {
-        ChampionsConfigClient configC = ChampionsConfigClient.get();
-        ChampionsConfigServer configS = ChampionsConfigServer.get();
-        ChampionsConfigAffixes configA = ChampionsConfigAffixes.get();
+        final ChampionsConfigClient configC = ChampionsConfigClient.get();
+        final ChampionsConfigServer configS = ChampionsConfigServer.get();
+        final ChampionsConfigAffixes configA = ChampionsConfigAffixes.get();
 
-        Map<String, Object> changes = new HashMap<>();
-        Map<String, Object> changesServer = new HashMap<>();
-        Map<String, Object> changesAffix = new HashMap<>();
+        final Map<String, Object> changes = new HashMap<>();
+        final Map<String, Object> changesServer = new HashMap<>();
+        final Map<String, Object> changesAffix = new HashMap<>();
 
 
-        ConfigBuilder builder = ConfigBuilder.create()
+        final ConfigBuilder builder = ConfigBuilder.create()
                 .setParentScreen(parent)
                 .setTitle(Text.translatable("champions.title"));
 
-        ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        ConfigCategory hud = builder.getOrCreateCategory(Text.translatable("champions.category.client"));
+        final ConfigEntryBuilder entryBuilder = builder.entryBuilder();
+        final ConfigCategory hud = builder.getOrCreateCategory(Text.translatable("champions.category.client"));
 
 
-        var colors = entryBuilder.startSubCategory(Text.translatable("champions.hud.colors"))
-                .setExpanded(true);
+        final var colors = entryBuilder.startSubCategory(Text.translatable("champions.hud.colors")).setExpanded(true);
 
         final String hex_1 = "hex_tier_1";
         final String hex_2 = "hex_tier_2";
@@ -86,8 +85,7 @@ public class ChampionsModMenu implements ModMenuApi {
         hud.addEntry(colors.build());
 
 
-        var yOffsets = entryBuilder.startSubCategory(Text.translatable("champions.hud.y_offset"))
-                .setExpanded(true);
+        final var yOffsets = entryBuilder.startSubCategory(Text.translatable("champions.hud.y_offset")).setExpanded(true);
 
         final String yOf1 = "y_offset_stars";
         final String yOf2 = "y_offset_text";
@@ -122,8 +120,7 @@ public class ChampionsModMenu implements ModMenuApi {
         hud.addEntry(yOffsets.build());
 
 
-        var xOffsets = entryBuilder.startSubCategory(Text.translatable("champions.hud.x_offset"))
-                .setExpanded(true);
+        final var xOffsets = entryBuilder.startSubCategory(Text.translatable("champions.hud.x_offset")).setExpanded(true);
 
         final String xOf1 = "x_offset_stars";
         final String xOf2 = "x_offset_text";
@@ -157,8 +154,7 @@ public class ChampionsModMenu implements ModMenuApi {
         hud.addEntry(xOffsets.build());
 
 
-        var barRender = entryBuilder.startSubCategory(Text.translatable("champions.hud.bar_render"))
-                .setExpanded(true);
+        final var barRender = entryBuilder.startSubCategory(Text.translatable("champions.hud.bar_render")).setExpanded(true);
 
         final String alwaysRender = "always_render";
         final String cacheC = "cache_client";
@@ -186,10 +182,9 @@ public class ChampionsModMenu implements ModMenuApi {
 
 
 
-        ConfigCategory server = builder.getOrCreateCategory(Text.translatable("champions.category.server"));
+        final ConfigCategory server = builder.getOrCreateCategory(Text.translatable("champions.category.server"));
 
-        var tiersWeight = entryBuilder.startSubCategory(Text.translatable("champions.hud.tiers_w"))
-                .setExpanded(true);
+        final var tiersWeight = entryBuilder.startSubCategory(Text.translatable("champions.hud.tiers_w")).setExpanded(true);
 
         final String w0 = "tier0_weight";
         final String w1 = "tier1_weight";
@@ -237,8 +232,7 @@ public class ChampionsModMenu implements ModMenuApi {
 
         server.addEntry(tiersWeight.build());
 
-        var tiersGh = entryBuilder.startSubCategory(Text.translatable("champions.hud.tiers_gh"))
-                .setExpanded(true);
+        final var tiersGh = entryBuilder.startSubCategory(Text.translatable("champions.hud.tiers_gh")).setExpanded(true);
 
         final String gh1 = "tier1_growth_health";
         final String gh2 = "tier2_growth_health";
@@ -278,8 +272,7 @@ public class ChampionsModMenu implements ModMenuApi {
 
         server.addEntry(tiersGh.build());
 
-        var tiersGs = entryBuilder.startSubCategory(Text.translatable("champions.hud.tiers_gs"))
-                .setExpanded(true);
+        final var tiersGs = entryBuilder.startSubCategory(Text.translatable("champions.hud.tiers_gs")).setExpanded(true);
 
         final String gs1 = "tier1_growth_strength";
         final String gs2 = "tier2_growth_strength";
@@ -319,8 +312,7 @@ public class ChampionsModMenu implements ModMenuApi {
 
         server.addEntry(tiersGs.build());
 
-        var tiersA = entryBuilder.startSubCategory(Text.translatable("champions.hud.tiers_a"))
-                .setExpanded(true);
+        final var tiersA = entryBuilder.startSubCategory(Text.translatable("champions.hud.tiers_a")).setExpanded(true);
 
         final String a1 = "tier1_affixes_count";
         final String a2 = "tier2_affixes_count";
@@ -362,10 +354,9 @@ public class ChampionsModMenu implements ModMenuApi {
         server.addEntry(tiersA.build());
 
 
-        ConfigCategory affixes = builder.getOrCreateCategory(Text.translatable("champions.category.affixes"));
+        final ConfigCategory affixes = builder.getOrCreateCategory(Text.translatable("champions.category.affixes"));
 
-        var registry = entryBuilder.startSubCategory(Text.translatable("champions.hud.registry"))
-                .setExpanded(true);
+        final var registry = entryBuilder.startSubCategory(Text.translatable("champions.hud.registry")).setExpanded(true);
 
         final String r1 = "hasty_affix";
         final String r2 = "arctic_affix";
@@ -475,9 +466,7 @@ public class ChampionsModMenu implements ModMenuApi {
                 .build());
 
         affixes.addEntry(registry.build());
-
-
-
+        
         builder.setSavingRunnable(() -> {
             ChampionsConfigClient.save(changes);
             ChampionsConfigServer.save(changesServer);

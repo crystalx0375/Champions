@@ -1,4 +1,4 @@
-package crystal.champions.util.net;
+package crystal.champions.net;
 
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.network.RegistryByteBuf;
@@ -29,7 +29,6 @@ public abstract class Payload implements CustomPayload {
         @Override public Id<? extends CustomPayload> getId() { return SERVER_UPDATE_ID; }
     }
 
-
     public record ChampionUpdateCl(UUID uuid, Text name, int tier, String affixes, float health, float maxHealth) implements CustomPayload {
         public static final Id<ChampionUpdateCl> CLIENT_UPDATE_ID = new Id<>(Identifier.of(CHAMPIONS, "update_client_hud"));
         public static final PacketCodec<RegistryByteBuf, ChampionUpdateCl> CODEC = PacketCodec.tuple(
@@ -44,19 +43,28 @@ public abstract class Payload implements CustomPayload {
         @Override public Id<? extends CustomPayload> getId() { return CLIENT_UPDATE_ID; }
     }
 
-
-    public record ChampionRemove(UUID uuid) implements CustomPayload {
-        public static final Id<ChampionRemove> REMOVE_ID = new Id<>(Identifier.of(CHAMPIONS, "remove_hud"));
-        public static final PacketCodec<RegistryByteBuf, ChampionRemove> CODEC = PacketCodec.tuple(
-                Uuids.PACKET_CODEC, ChampionRemove::uuid,
-                ChampionRemove::new
+    public record ChampionSRemove(UUID uuid) implements CustomPayload {
+        public static final Id<ChampionSRemove> REMOVE_ID_SERVER = new Id<>(Identifier.of(CHAMPIONS, "remove_hud_server"));
+        public static final PacketCodec<RegistryByteBuf, ChampionSRemove> CODEC = PacketCodec.tuple(
+                Uuids.PACKET_CODEC, ChampionSRemove::uuid,
+                ChampionSRemove::new
         );
-        @Override public Id<? extends CustomPayload> getId() { return REMOVE_ID; }
+        @Override public Id<? extends CustomPayload> getId() { return REMOVE_ID_SERVER; }
+    }
+
+    public record ChampionCRemove(UUID uuid) implements CustomPayload {
+        public static final Id<ChampionCRemove> REMOVE_ID_CLIENT = new Id<>(Identifier.of(CHAMPIONS, "remove_hud_client"));
+        public static final PacketCodec<RegistryByteBuf, ChampionCRemove> CODEC = PacketCodec.tuple(
+                Uuids.PACKET_CODEC, ChampionCRemove::uuid,
+                ChampionCRemove::new
+        );
+        @Override public Id<? extends CustomPayload> getId() { return REMOVE_ID_CLIENT; }
     }
 
     public static void register() {
         PayloadTypeRegistry.playS2C().register(Payload.ChampionUpdate.SERVER_UPDATE_ID, Payload.ChampionUpdate.CODEC);
         PayloadTypeRegistry.playS2C().register(Payload.ChampionUpdateCl.CLIENT_UPDATE_ID, Payload.ChampionUpdateCl.CODEC);
-        PayloadTypeRegistry.playS2C().register(Payload.ChampionRemove.REMOVE_ID, Payload.ChampionRemove.CODEC);
+        PayloadTypeRegistry.playS2C().register(Payload.ChampionSRemove.REMOVE_ID_SERVER, Payload.ChampionSRemove.CODEC);
+        PayloadTypeRegistry.playS2C().register(Payload.ChampionCRemove.REMOVE_ID_CLIENT, Payload.ChampionCRemove.CODEC);
     }
 }

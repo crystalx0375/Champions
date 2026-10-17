@@ -1,4 +1,4 @@
-package crystal.champions.data;
+package crystal.champions.datagen;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
@@ -48,7 +48,7 @@ public class ChampionsLootTable extends SimpleFabricLootTableProvider {
         );
     }
     private void generateTier5(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> exporter) {
-        RegistryKey<LootTable> key = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("champions", "champions/tier_" + 5));
+        final RegistryKey<LootTable> key = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("champions", "champions/tier_" + 5));
         exporter.accept(key, LootTable.builder()
                 .pool(LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))

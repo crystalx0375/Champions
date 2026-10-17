@@ -9,23 +9,17 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.projectile.ShulkerBulletEntity;
 import net.minecraft.util.math.Direction;
 
-/**
- * Создаем bullet, и суем в него нбт
- * Я объединил molten и enkindling
- * ShulkerBulletEntity
- */
 public class MoltenAffix extends Affix {
+    final ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
 
     public MoltenAffix() {
         super("molten");
     }
 
-    ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
-
     @Override
     public void onAttack(LivingEntity entity, MobEntity mob) {
         if (entity.age % config.cooldownBeforeBulletMolten == 0) {
-            LivingEntity target = mob.getTarget();
+            final LivingEntity target = mob.getTarget();
             if (target != null) {
                 ShulkerBulletEntity bullet = new ShulkerBulletEntity(entity.getWorld(), entity, target, Direction.Axis.Y);
                 bullet.setPosition(entity.getX(), entity.getEyeY() + 0.5, entity.getZ());

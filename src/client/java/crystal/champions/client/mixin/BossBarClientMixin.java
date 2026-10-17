@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(BossBarHud.class)
 public abstract class BossBarClientMixin {
     /**
-     * Убираем все босс бары если есть чемпионы
+     * Disable all bars when champion is rendering
      */
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void cancelRender(DrawContext context, CallbackInfo ci) {

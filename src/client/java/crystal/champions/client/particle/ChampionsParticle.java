@@ -5,15 +5,21 @@ import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 
-/**
- * Custom particles for champions
- */
 public class ChampionsParticle extends SpriteBillboardParticle {
     private final SpriteProvider spriteProvider;
 
-    public ChampionsParticle(ClientWorld world, double x, double y, double z,
-                             double velocityX, double velocityY, double velocityZ,
-                             SpriteProvider spriteProvider, int hexColor) {
+    /**
+     * Setting particles for champions
+     * @param spriteProvider set sprite age for disappearing
+     * @param hexColor not native "color" parameter, but can use for color
+     */
+    public ChampionsParticle(
+            ClientWorld world,
+            double x, double y, double z,
+            double velocityX, double velocityY, double velocityZ,
+            SpriteProvider spriteProvider,
+            int hexColor
+    ) {
         super(world, x, y, z, velocityX, velocityY, velocityZ);
 
         this.spriteProvider = spriteProvider;

@@ -6,17 +6,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.world.World;
-/**
- * PlaguedAffix
- * Здесь мы на моба ставим туманное зелье на отравление и все
- */
+
 public class PlaguedAffix extends Affix {
+    private static final ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
 
     public PlaguedAffix() {
         super("plagued");
     }
-
-    ChampionsConfigAffixes config = ChampionsConfigAffixes.get();
 
     @Override
     public void onTick(LivingEntity entity) {
