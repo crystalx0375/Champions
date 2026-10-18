@@ -25,7 +25,7 @@ public abstract class ServerUpdatePackets extends LivingEntity implements IChamp
     @Unique private static final double S_SQ = 225D;
     @Unique private static final double C_SQ = 1600D;
     @Unique private static final double SCAN_RADIUS = 80D;
-    @Unique private static final int SYNC = 40;
+    @Unique private static final int SYNC = 20;
     @Unique private static final float DIFF = 0.001F;
 
     @Unique private final Set<UUID> sSent = new HashSet<>();
