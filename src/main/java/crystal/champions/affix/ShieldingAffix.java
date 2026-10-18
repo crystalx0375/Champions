@@ -29,7 +29,9 @@ public class ShieldingAffix extends Affix {
             ((ServerWorld) entity.getWorld()).spawnParticles(
                     ParticleTypes.EFFECT,
                     entity.getX(), entity.getRandomBodyY(), entity.getZ(),
-                    0, 1.0, 1.0, 1.0, 0.8
+                    0,
+                    1.0, 1.0, 1.0,
+                    0.8
             );
         }
     }

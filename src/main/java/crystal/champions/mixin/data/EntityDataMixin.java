@@ -26,7 +26,7 @@ import java.util.Objects;
 public abstract class EntityDataMixin extends Entity implements IChampions {
     @Unique private int tier = 0;
     @Unique private String affixes = "";
-    @Unique private String type = "";
+    @Unique private String adaptationType = "";
     @Unique private int adaptationCount = 0;
     @Unique private boolean isShielding = false;
 
@@ -48,11 +48,11 @@ public abstract class EntityDataMixin extends Entity implements IChampions {
     }
     @Override
     public String champions$getAdaptationType() {
-        return type;
+        return adaptationType;
     }
     @Override
     public void champions$setAdaptationType(String t) {
-        type = t;
+        adaptationType = t;
     }
     @Override
     public int champions$getAdaptation() {
