@@ -40,7 +40,7 @@ public class ChampionsLootTable extends SimpleFabricLootTableProvider {
     }
     private void generateTier(BiConsumer<RegistryKey<LootTable>, LootTable.Builder> exporter, int tier, LootPoolEntry.Builder<?> entry) {
         if (tier >= 5) return;
-        RegistryKey<LootTable> key = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("champions", "champions/tier_" + tier));
+        final RegistryKey<LootTable> key = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of("champions", "champions/tier_" + tier));
         exporter.accept(key, LootTable.builder().pool(LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(tier))
                         .with(entry)

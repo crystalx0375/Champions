@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@SuppressWarnings("java:S110")
+@SuppressWarnings({"java:S110", "java:S2160"})
 @Mixin(CreeperEntity.class)
 public class CreeperEntityMixin extends HostileEntity {
     @Shadow private int explosionRadius;
@@ -28,13 +28,9 @@ public class CreeperEntityMixin extends HostileEntity {
             if (tier > 0) {
                 this.explosionRadius = (int) (this.explosionRadius * (float) tier);
             }
-        }
-    }
-    
-    @Inject(method = "tick", at = @At("HEAD"))
-    private void championsTick(CallbackInfo ci) {
-        if (this instanceof IChampions champions && champions.champions$getChampionTier() > 3) {
-            fuseTime = fuseTime + (champions.champions$getChampionTier() - 3) * 10;
+            if (tier == 5) {
+                this.explosionRadius = this.explosionRadius * 2;
+            }
         }
     }
 }
